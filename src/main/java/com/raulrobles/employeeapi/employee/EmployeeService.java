@@ -84,6 +84,17 @@ public class EmployeeService {
     }
 
     /**
+     * Deletes an existing Employee entity from database
+     * @param id employee identifier
+     * @throws EmployeeNotFoundException if no employee exists with the given identifier
+     */
+    @Transactional
+    public void deleteEmployee(Long id) {
+        Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        this.employeeRepository.delete(employee);
+    }
+
+    /**
      * Maps the employee request to a new Employee entity
      * @param employeeRequest validated employee data
      * @return new Employee entity ready to be persisted
