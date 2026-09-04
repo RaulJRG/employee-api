@@ -1,20 +1,14 @@
 package com.raulrobles.employeeapi.employee;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/employees")
@@ -29,6 +23,12 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public ResponseEntity<Employee> findEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getEmployeeById(id));
-    }    
+    }
+    
+    @PostMapping
+    public ResponseEntity<List<Employee>> createEmployees(@Valid @RequestBody EmployeesRequest request) {
+        List<Employee> employeesCreated = this.employeeService.createEmployees(request.employees());
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeesCreated);
+    }
     
 }
