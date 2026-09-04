@@ -1,0 +1,426 @@
+openapi: 3.0.1
+info:
+  title: Employee API
+  description: REST API for employee management.
+  license:
+    name: Internal evaluation project
+  version: 1.0.0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+tags:
+- name: Employee API
+  description: API for managing employees
+paths:
+  /employees/{id}:
+    get:
+      tags:
+      - Employee API
+      summary: Get employee by ID
+      description: Retrieves an employee by its identifier.
+      operationId: findEmployeeById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Employee retrieved successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Employee'
+        "404":
+          description: Employee not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    put:
+      tags:
+      - Employee API
+      summary: Update employee by ID
+      description: Updates an existing employee by its identifier.
+      operationId: updateEmployee
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdateRequest'
+        required: true
+      responses:
+        "400":
+          description: Invalid employee data
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        "200":
+          description: Employee updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Employee'
+        "404":
+          description: Employee not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    delete:
+      tags:
+      - Employee API
+      summary: Delete employee by ID
+      description: Deletes an employee by its identifier.
+      operationId: deleteEmployee
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Employee deleted successfully
+        "404":
+          description: Employee not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /employees:
+    get:
+      tags:
+      - Employee API
+      summary: Get all employees
+      description: Retrieves a page of employees with pagination and sorting options.
+      operationId: findAllEmployees
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: Successfully retrieved the list of employees
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageEmployee'
+    post:
+      tags:
+      - Employee API
+      summary: Create employees
+      description: Creates and persists Employees entities from validated request
+        data.
+      operationId: createEmployees
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeesRequest'
+        required: true
+      responses:
+        "400":
+          description: Invalid employee data
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        "201":
+          description: Employees created successfully
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+  /employees/search:
+    get:
+      tags:
+      - Employee API
+      summary: Search employees by partial name
+      description: "Searches employees by a partial, case-insensitive name match."
+      operationId: searchEmployeesByPartialName
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "400":
+          description: Invalid search parameter
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        "200":
+          description: Employees retrieved successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageEmployee'
+components:
+  schemas:
+    EmployeeUpdateRequest:
+      required:
+      - age
+      - birthDate
+      - firstName
+      - gender
+      - isActive
+      - lastName
+      - position
+      type: object
+      properties:
+        firstName:
+          $ref: '#/components/schemas/JsonNullableString'
+        secondName:
+          $ref: '#/components/schemas/JsonNullableString'
+        lastName:
+          $ref: '#/components/schemas/JsonNullableString'
+        secondLastName:
+          $ref: '#/components/schemas/JsonNullableString'
+        age:
+          $ref: '#/components/schemas/JsonNullableInteger'
+        gender:
+          $ref: '#/components/schemas/JsonNullableGender'
+        birthDate:
+          $ref: '#/components/schemas/JsonNullableLocalDate'
+        position:
+          $ref: '#/components/schemas/JsonNullableString'
+        isActive:
+          $ref: '#/components/schemas/JsonNullableBoolean'
+    JsonNullableBoolean:
+      type: object
+      properties:
+        present:
+          type: boolean
+    JsonNullableGender:
+      type: object
+      properties:
+        present:
+          type: boolean
+    JsonNullableInteger:
+      type: object
+      properties:
+        present:
+          type: boolean
+    JsonNullableLocalDate:
+      type: object
+      properties:
+        present:
+          type: boolean
+    JsonNullableString:
+      type: object
+      properties:
+        present:
+          type: boolean
+    ApiError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        statusCode:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        secondName:
+          type: string
+        lastName:
+          type: string
+        secondLastName:
+          type: string
+        age:
+          type: integer
+          format: int32
+        gender:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+        birthDate:
+          type: string
+          format: date
+        position:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+    EmployeeRequest:
+      required:
+      - age
+      - birthDate
+      - firstName
+      - gender
+      - isActive
+      - lastName
+      - position
+      type: object
+      properties:
+        firstName:
+          maxLength: 32
+          minLength: 0
+          type: string
+        secondName:
+          maxLength: 32
+          minLength: 0
+          pattern: .*\S.*
+          type: string
+          example: string
+        lastName:
+          maxLength: 32
+          minLength: 0
+          type: string
+        secondLastName:
+          maxLength: 32
+          minLength: 0
+          pattern: .*\S.*
+          type: string
+          example: string
+        age:
+          maximum: 150
+          minimum: 18
+          type: integer
+          format: int32
+        gender:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+        birthDate:
+          type: string
+          format: date
+        position:
+          maxLength: 50
+          minLength: 0
+          type: string
+        isActive:
+          type: boolean
+    EmployeesRequest:
+      required:
+      - employees
+      type: object
+      properties:
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeRequest'
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    PageEmployee:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        direction:
+          type: string
+        nullHandling:
+          type: string
+        ascending:
+          type: boolean
+        property:
+          type: string
+        ignoreCase:
+          type: boolean

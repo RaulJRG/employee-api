@@ -49,8 +49,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false, length = 10)
     private Gender gender;
-   
-    //Debe ser formato dd-MM-yyyy
+
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
