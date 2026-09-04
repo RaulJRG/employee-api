@@ -6,3 +6,12 @@ After some dependencies modifications in pom.xml, the project was recompiled by 
 
 .\mvnw clean compile
 
+## Starting the project
+
+Run the next command
+
+.\mvnw spring-boot:run
+
+Tomcat will start by default in port 8080, so you can test the api using the base url
+
+http://localhost:8080
