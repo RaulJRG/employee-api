@@ -13,6 +13,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class EmployeeUpdateRequest {
     @Size(max = 32, message = "First name must not exceed 32 characters")
     private JsonNullable<String> firstName = JsonNullable.undefined();
 
+    @Schema(example = "string")
     @Pattern(regexp = ".*\\S.*", message = "Second name must not be blank when provided")
     @Size(max = 32, message = "Second name must not exceed 32 characters")
     private JsonNullable<String> secondName = JsonNullable.undefined();
@@ -32,6 +34,7 @@ public class EmployeeUpdateRequest {
     @Size(max = 32, message = "Last name must not exceed 32 characters")
     private JsonNullable<String> lastName = JsonNullable.undefined();
 
+    @Schema(example = "string")
     @Pattern(regexp = ".*\\S.*", message = "Second last name must not be blank when provided")
     @Size(max = 32, message = "Second last name must not exceed 32 characters")
     private JsonNullable<String> secondLastName = JsonNullable.undefined();

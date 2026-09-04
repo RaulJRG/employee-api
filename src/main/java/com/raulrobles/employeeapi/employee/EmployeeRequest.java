@@ -11,12 +11,15 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public record EmployeeRequest (
 
     @NotBlank(message = "First name is required and must not be blank")
     @Size(max = 32, message = "First name must not exceed 32 characters")
     String firstName,
 
+    @Schema(example = "string")
     @Pattern(regexp = ".*\\S.*", message = "Second name must not be blank")
     @Size(max = 32, message = "Second name must not exceed 32 characters")
     String secondName,
@@ -25,6 +28,7 @@ public record EmployeeRequest (
     @Size(max = 32, message = "Last name must not exceed 32 characters")
     String lastName,
 
+    @Schema(example = "string")
     @Pattern(regexp = ".*\\S.*", message = "Second last name must not be blank")
     @Size(max = 32, message = "Second last name must not exceed 32 characters")
     String secondLastName,
