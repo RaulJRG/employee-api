@@ -47,5 +47,11 @@ public class EmployeeController {
         List<Employee> employeesCreated = this.employeeService.createEmployees(request.employees());
         return ResponseEntity.status(HttpStatus.CREATED).body(employeesCreated);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id,
+            @Valid @RequestBody EmployeeUpdateRequest request) {
+        return ResponseEntity.ok(this.employeeService.updateEmployee(id, request));
+    }
     
 }
