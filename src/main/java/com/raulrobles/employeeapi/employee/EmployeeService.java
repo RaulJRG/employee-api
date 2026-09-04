@@ -1,8 +1,6 @@
 package com.raulrobles.employeeapi.employee;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +70,7 @@ public class EmployeeService {
     /**
      * Updates an existing Employee entity in database
      * @param id employee identifier
-     * @param employeeRequest validated employee data
+     * @param employeeUpdateRequest validated employee data
      * @return Employee entity updated
      * @throws EmployeeNotFoundException if no employee exists with the given identifier
      */
@@ -117,7 +115,7 @@ public class EmployeeService {
     /**
      * Updates partial or totally an existing Employee entity with validated request data
      * @param employee Entity to be updated
-     * @param employeeRequest validated employee data
+     * @param employeeUpdateRequest validated employee data
      */
     private void updateEntity(Employee employee, EmployeeUpdateRequest employeeUpdateRequest) {
         employeeUpdateRequest.getFirstName().ifPresent(name -> employee.setFirstName(name.trim()));

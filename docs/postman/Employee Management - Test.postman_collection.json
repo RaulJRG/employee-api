@@ -1,0 +1,170 @@
+{
+  "info": {
+    "_postman_id": "854f0859-b7ec-404f-b8ee-c3c312ebabe5",
+    "name": "Employee Management - Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19562224"
+  },
+  "item": [
+    {
+      "name": "Find Employee by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/employees/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "employees",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List all Employees",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/employees?page=0&size=1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "employees"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search Employees By Partial Name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/employees/search?name=rob&page=0&size=10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "employees",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "rob"
+            },
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Employees",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"employees\": [\r\n    {\r\n      \"firstName\": \"Raul\",\r\n      \"lastName\": \"Robles\",\r\n      \"age\": 26,\r\n      \"gender\": \"MALE\",\r\n      \"birthDate\": \"12-11-1999\",\r\n      \"position\": \"Developer\",\r\n      \"isActive\": true\r\n    },\r\n    {\r\n      \"firstName\": \"Josafat\",\r\n      \"lastName\": \"Gomar\",\r\n      \"age\": 30,\r\n      \"gender\": \"MALE\",\r\n      \"birthDate\": \"12-12-1995\",\r\n      \"position\": \"Tester\",\r\n      \"isActive\": true\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Employee by ID",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"Raul\",\r\n    \"secondName\": \"Josafat\",\r\n    \"lastName\": \"Robles\",\r\n    \"secondLastName\": \"Gomar\",\r\n    \"age\": 26,\r\n    \"gender\": \"MALE\",\r\n    \"birthDate\": \"12-11-1999\",\r\n    \"position\": \"Developer\",\r\n    \"isActive\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/employees/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "employees",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Find Employee by ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/employees/1232131242",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "employees",
+            "1232131242"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
