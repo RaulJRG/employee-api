@@ -57,7 +57,7 @@ You can also find the yaml downloaded here:
 
 And the postman collection in
 
-`docs\postman\.yaml`
+`docs\postman\Employee Management - Test.postman_collection.json`
 
 ## About the database
 
@@ -84,4 +84,7 @@ In order to validate de correct functionality of this application, some images w
 For endpoints succes and error response, the images can be found in `evidence/postman`
 
 - OpenAPI documentation
-This can be foun in `evidence/openapi`
+This can be found in `evidence/openapi`
+
+- Unit tests
+The result of a test execution successful is here `evidence/tests`
