@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +22,21 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+    @Transactional(readOnly = true)
+    public Page<Employee> getAllEmployees(Pageable pageable) {
+        return this.employeeRepository.findAll(pageable);
+    }
+    
+    @Transactional(readOnly = true)
+    public Page<Employee> searchEmployeesByPartialName(String name, Pageable pageable) {
+        return this.employeeRepository.findByPartialName(name, pageable);
+    }
+    
+    @Transactional(readOnly = true)
     public Employee getEmployeeById(Long id) {
         return this.employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
-    }   
+    }
 
     @Transactional
     public List<Employee> createEmployees(List<EmployeeRequest> employeesRequest){

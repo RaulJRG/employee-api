@@ -1,10 +1,13 @@
 package com.raulrobles.employeeapi.employee;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 
@@ -18,6 +21,20 @@ public class EmployeeController {
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Employee>> findAllEmployees(
+            @PageableDefault(sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(this.employeeService.getAllEmployees(pageable));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Employee>> searchEmployeesByPartialName(
+        @RequestParam String name,
+        @PageableDefault(sort="firstName", direction = Sort.Direction.ASC) Pageable pageable
+    ){
+        return ResponseEntity.ok(this.employeeService.searchEmployeesByPartialName(name, pageable));
     }
 
     @GetMapping("/{id}")
