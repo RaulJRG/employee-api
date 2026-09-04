@@ -16,6 +16,14 @@ Tomcat will start by default in port 8080, so you can test the api using the bas
 
 http://localhost:8080
 
+## Build and test
+
+On Windows, use the Maven Wrapper included in the repository:
+
+```
+.\mvnw.cmd clean test
+```
+
 ## API documentation
 
 The OpenAPI contract was generated with springdoc, it can be accessed here:
