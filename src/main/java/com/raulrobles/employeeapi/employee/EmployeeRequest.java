@@ -2,6 +2,8 @@ package com.raulrobles.employeeapi.employee;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -28,10 +30,12 @@ public record EmployeeRequest (
     String secondLastName,
 
     @NotNull(message = "Age is required")
+    @Min(value = 18, message = "Age must be greater than or equal to 18")
+    @Max(value = 150, message = "Age must be less than or equal to 150")
     Integer age,
 
-    //TODO: Validar con un enum para que solo acepte valores válidos (MALE, FEMALE, OTHER)
-    String gender,
+    @NotNull(message = "Gender is required")
+    Gender gender,
     
     @NotNull(message = "Birth date is required")
     @JsonFormat(pattern = "dd-MM-yyyy")
